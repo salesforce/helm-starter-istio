@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ .Values.service | quote }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.service | quote }}
+    app.kubernetes.io/part-of: {{ .Values.system | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  hosts:
+    - {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}
+  http:
+    - route:
+      - destination:
+          host: {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}
+          subset: {{ (print "v" .Values.version) | quote }}

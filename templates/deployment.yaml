@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.service | quote }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.service | quote }}
+    app.kubernetes.io/part-of: {{ .Values.system | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.service | quote }}
+      app.kubernetes.io/version: {{ .Values.version | quote }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.service | quote }}
+        app.kubernetes.io/part-of: {{ .Values.system | quote }}
+        app.kubernetes.io/version: {{ .Values.version | quote }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: {{ .Values.service | quote }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          ports:
+{{- range .Values.ports }}
+            - name: {{ .name | quote }}
+              containerPort: {{ .targetPort }}
+              protocol: TCP
+{{- end }}
+{{- if .Values.probes -}}{{- toYaml .Values.probes | nindent 10 -}}{{- end -}}
+          volumeMounts:
+            - name: {{ (print .Values.service "-config") | quote }}
+              mountPath: {{ .Values.configMap.mountPath | quote }}
+      volumes:
+        - name: {{ (print .Values.service "-config") | quote }}
+          configMap:
+            name: {{ .Values.service | quote }}

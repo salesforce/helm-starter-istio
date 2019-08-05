@@ -1,0 +1,52 @@
+# Default values for <CHARTNAME>.
+# This is a YAML-formatted file.
+
+# The overall system your service is a part of
+system: <CHARTNAME>
+# The name of your service
+service: <CHARTNAME>
+# The major version number for your service
+version: 1
+
+# Docker settings
+image:
+  # The name of your docker container
+  repository: XXXX
+  # Your docker container's tag
+  tag: YYYY
+
+# The number of pod replicas to run for your service
+replicaCount: 3
+
+# Port settings
+# Ports must be named <protocol>[-<suffix>] to work with Istio.
+# Valid protocols are grpc, http, http2, https, mongo, mysql, redis, tcp, tls, udp
+ports:
+  - name: grpc-svc
+    port: 8443
+    targetPort: 8443
+  - name: http-status
+    port: 8080
+    targetPort: 8080
+
+configMap:
+  # Where the config map should be mounted inside your container's filesystem.
+  mountPath: /config/<CHARTNAME>-config
+  fileName: config.yaml
+  # Everything under content is copied verbatim into your service's configmap.
+  content:
+    key1: value1
+    key2: value2
+
+# Probe settings (use Kubernetes syntax)
+probes:
+  livenessProbe:
+    initialDelaySeconds: 30
+    httpGet:
+      path: /health
+      port: 8080
+  readinessProbe:
+    timeoutSeconds: 10
+    httpGet:
+      path: /ready
+      port: 8080
