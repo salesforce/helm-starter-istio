@@ -29,6 +29,14 @@ ports:
     port: 8080
     targetPort: 8080
 
+# When enabled, configure the Istio ingress gateway to route outside traffic for the provided
+# host name to this service on the ports and protocols defined in the 'ports' section 
+# above. 
+ingressGateway:
+  enabled: false
+  name: default/my-gateway
+  host: "*"
+
 configMap:
   # Where the config map should be mounted inside your container's filesystem.
   mountPath: /config/<CHARTNAME>-config
