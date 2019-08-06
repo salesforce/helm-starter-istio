@@ -25,7 +25,7 @@ spec:
       containers:
         - name: {{ .Values.service | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: {{ .Values.image.imagePullPolicy | quote }}
           ports:
 {{- range .Values.ports }}
             - name: {{ .name | quote }}

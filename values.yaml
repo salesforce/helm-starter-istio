@@ -14,6 +14,7 @@ image:
   repository: XXXX
   # Your docker container's tag
   tag: YYYY
+  imagePullPolicy: IfNotPresent
 
 # The number of pod replicas to run for your service
 replicaCount: 3
@@ -35,7 +36,7 @@ ports:
 ingressGateway:
   enabled: false
   name: default/my-gateway
-  host: "*"
+  host: my.gateway.com
 
 configMap:
   # Where the config map should be mounted inside your container's filesystem.
