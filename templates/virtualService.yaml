@@ -8,15 +8,15 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
   namespace: {{ .Release.Namespace | quote }}
 spec:
-  gateways:
-    - "mesh" # applies to all the sidecars in the mesh
 {{- if .Values.ingressGateway.enabled }}
+  gateways:
     - {{ .Values.ingressGateway.name | quote }}
 {{- end }}    
   hosts:
-    - {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}
 {{- if .Values.ingressGateway.enabled }}
     - {{ .Values.ingressGateway.host | quote }}
+{{- else }}
+    - {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}
 {{- end }}
   http:
     - route:
