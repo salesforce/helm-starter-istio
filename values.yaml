@@ -37,7 +37,9 @@ ingressGateway:
   enabled: false
 # name: default/my-gateway
 # host: my.gateway.com
-# matchPrefix: /
+# matchPrefix: 
+#   - "/foo"
+#   - "/bar"
 
 configMap:
   # Where the config map should be mounted inside your container's filesystem.

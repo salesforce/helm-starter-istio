@@ -21,8 +21,10 @@ spec:
   http:
 {{- if .Values.ingressGateway.enabled }}
     - match:
+{{- range .Values.ingressGateway.matchPrefix }}
       - uri:
-          prefix: {{ .Values.ingressGateway.matchPrefix | quote }}
+          prefix: {{ . | quote }}
+{{- end }}
       route:
       - destination:
           host: {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}
