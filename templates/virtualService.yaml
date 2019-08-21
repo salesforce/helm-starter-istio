@@ -19,7 +19,17 @@ spec:
     - {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}
 {{- end }}
   http:
+{{- if .Values.ingressGateway.enabled }}
+    - match:
+      - uri:
+          prefix: {{ .Values.ingressGateway.matchPrefix | quote }}
+      route:
+      - destination:
+          host: {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}
+          subset: {{ (print "v" .Values.version) | quote }}
+{{- else }}
     - route:
       - destination:
           host: {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}
           subset: {{ (print "v" .Values.version) | quote }}
+{{- end }}
