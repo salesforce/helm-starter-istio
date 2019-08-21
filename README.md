@@ -2,6 +2,18 @@
 
 An Istio starter template for Helm.
 
+## Features
+
+* Simplified Istio ingress configuration
+* Simplified Istio port configuration
+* ConfigMap driven by `values.yaml`, to facilitate easy Helm value overriding
+* Creates the following Kubernetes and Istio objects
+** Service
+** Deployment
+** ConfigMap
+** VirtualService
+** DestinationRule
+
 ## Usage
 
 ```sh
