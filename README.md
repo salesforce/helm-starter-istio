@@ -14,6 +14,11 @@ An Istio starter template for Helm.
   * ConfigMap
   * VirtualService
   * DestinationRule
+  
+## Installation
+
+* Clone into `~/.helm/starters` or,
+* Install with the [`helm-starter`](https://github.com/salesforce/helm-starter) plugin
 
 ## Usage
 
