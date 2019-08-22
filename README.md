@@ -18,7 +18,8 @@ An Istio starter template for Helm.
 ## Installation
 
 * Clone into `~/.helm/starters` or,
-* Install with the [`helm-starter`](https://github.com/salesforce/helm-starter) plugin
+* Install with the [`helm-starter`](https://github.com/salesforce/helm-starter) plugin.
+  * `helm starter fetch https://github.com/salesforce/helm-starter-istio.git`
 
 ## Usage
 
