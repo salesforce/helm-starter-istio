@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.service | quote }}
+  name: {{ (print .Values.service "-v" .Values.version) | quote }}
   labels:
     app.kubernetes.io/name: {{ .Values.service | quote }}
     app.kubernetes.io/part-of: {{ .Values.system | quote }}
