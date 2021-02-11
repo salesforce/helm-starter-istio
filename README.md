@@ -17,6 +17,8 @@ running in Istio correctly the first time.
   * ConfigMap
   * VirtualService
   * DestinationRule
+  * PodDisruptionBudget
+  * ServiceAccount
   
 ## Installation
 
