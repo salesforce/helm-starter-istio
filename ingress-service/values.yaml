@@ -10,6 +10,8 @@ version: 1
 
 # The Kubernetes service account your service runs under
 serviceAccountName: default
+# The number of pods from that set that can be unavailable after the eviction
+maxUnavailable: 1
 
 # Docker settings
 image:
