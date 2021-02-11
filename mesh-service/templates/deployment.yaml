@@ -36,7 +36,12 @@ spec:
               containerPort: {{ .targetPort }}
               protocol: TCP
 {{- end }}
-{{- if .Values.probes -}}{{- toYaml .Values.probes | nindent 10 -}}{{- end -}}
+{{- if .Values.resources }}
+{{ toYaml .Values.resources | indent 10 }}
+{{- end }}
+{{- if .Values.probes }}
+{{ toYaml .Values.probes | indent 10 }}
+{{- end }}
           volumeMounts:
             - name: {{ (print .Values.service "-config") | quote }}
               mountPath: {{ .Values.configMap.mountPath | quote }}

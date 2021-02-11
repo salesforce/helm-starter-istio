@@ -27,9 +27,16 @@ running in Istio correctly the first time.
 
 ## Usage
 
+Pick the starter you want to use:
+
+* `mesh-service` - creates a Helm chart for a mesh internal service (no ingress).
+* `ingress-service` - creates a Helm chart for sevice exposed through an Istio ingress gateway.
+* `mesh-egress` - creates a Helm chart for configuring mesh egress policies for external systems.
+* `auth-policy` - creates a Helm chart for managing authorization policy within the mesh.
+
 ```sh
 # Create a helm chart from the starter
-> helm create NAME --starter helm-starter-istio
+> helm create NAME --starter helm-starter-istio/[starter-name]
 
 # Deploy the helm chart to kubernetes
 > helm template NAME | kubectl -apply -f -
