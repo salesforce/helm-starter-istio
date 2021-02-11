@@ -49,6 +49,15 @@ configMap:
     key1: value1
     key2: value2
 
+# Resource settings (use Kubernetes syntax)
+resources:
+  requests:
+    memory: "32Mi"
+    cpu: "200m"
+  limits:
+    memory: "64Mi"
+    cpu: "250M"
+
 # Probe settings (use Kubernetes syntax)
 probes:
   livenessProbe:
