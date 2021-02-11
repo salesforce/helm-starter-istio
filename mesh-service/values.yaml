@@ -8,9 +8,13 @@ service: <CHARTNAME>
 # The major version number for your service
 version: 1
 
-# The Kubernetes service account your service runs under
-serviceAccountName: default
-# The number of pods from that set that can be unavailable after the eviction
+# Istio uses the service account name as a component of the service's security
+# identity. Set "create" to false to use an previously created service account.
+serviceAccount:
+  name: <CHARTNAME>
+  create: true
+
+# The maximum number of pods from that set that can be unavailable at once
 maxUnavailable: 1
 
 # Docker settings
