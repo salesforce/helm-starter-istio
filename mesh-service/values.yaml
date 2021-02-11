@@ -8,6 +8,9 @@ service: <CHARTNAME>
 # The major version number for your service
 version: 1
 
+# The Kubernetes service account your service runs under
+serviceAccountName: default
+
 # Docker settings
 image:
   # The name of your docker container

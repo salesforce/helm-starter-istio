@@ -26,6 +26,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
+      serviceAccountName: {{ .Values.serviceAccountName | quote }}
       containers:
         - name: {{ .Values.service | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
