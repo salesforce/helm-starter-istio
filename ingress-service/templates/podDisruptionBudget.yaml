@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ (print .Values.service "-v" .Values.version) | quote }}
+spec:
+  maxUnavailable: {{ .Values.maxUnavailable }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.service | quote }}
+      app.kubernetes.io/version: {{ .Values.version | quote }}
