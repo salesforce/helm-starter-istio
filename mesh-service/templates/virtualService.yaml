@@ -9,8 +9,6 @@ metadata:
   namespace: {{ .Release.Namespace | quote }}
 spec: 
   hosts:
-    - {{ (print .Values.service) | quote }}
-    - {{ (print .Values.service "." .Release.Namespace) | quote }}
     - {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}
   http:
     - route:

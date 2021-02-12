@@ -14,6 +14,8 @@ serviceAccount:
   name: bookinfo-product
   create: true
 
+# The number of pod replicas to run for your service
+replicaCount: 3
 # The maximum number of pods from that set that can be unavailable at once
 maxUnavailable: 1
 
@@ -24,9 +26,6 @@ image:
   # Your docker container's tag
   tag: 1.16.2
   imagePullPolicy: IfNotPresent
-
-# The number of pod replicas to run for your service
-replicaCount: 1
 
 # Port settings
 # Ports must be named <protocol>[-<suffix>] to work with Istio.
@@ -40,7 +39,7 @@ ports:
 # host name to this service on the ports and protocols defined in the 'ports' section 
 # above. 
 ingressGateway:
-  name: default/bookinfo-gateway
+  name: default/istio-gateway
   host: "lvh.me" # resolves to 127.0.0.1
   matchPrefix: 
     - "/productpage"
