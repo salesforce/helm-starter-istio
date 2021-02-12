@@ -26,7 +26,7 @@ image:
   imagePullPolicy: IfNotPresent
 
 # The number of pod replicas to run for your service
-replicaCount: 3
+replicaCount: 1
 
 # Port settings
 # Ports must be named <protocol>[-<suffix>] to work with Istio.
@@ -53,3 +53,16 @@ resources:
   limits:
     memory: "64Mi"
     cpu: "250M"
+
+# Probe settings (use Kubernetes syntax)
+probes:
+  livenessProbe:
+    initialDelaySeconds: 30
+    httpGet:
+      path: /health
+      port: 9080
+  readinessProbe:
+    timeoutSeconds: 10
+    httpGet:
+      path: /health
+      port: 9080
