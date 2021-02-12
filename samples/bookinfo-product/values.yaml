@@ -4,7 +4,7 @@
 # The overall system your service is a part of
 system: bookinfo
 # The name of your service
-service: bookinfo-product
+service: product
 # The major version number for your service
 version: 1
 
@@ -66,3 +66,16 @@ resources:
   limits:
     memory: "64Mi"
     cpu: "250M"
+
+# Probe settings (use Kubernetes syntax)
+probes:
+  livenessProbe:
+    initialDelaySeconds: 30
+    httpGet:
+      path: /health
+      port: 9080
+  readinessProbe:
+    timeoutSeconds: 10
+    httpGet:
+      path: /health
+      port: 9080

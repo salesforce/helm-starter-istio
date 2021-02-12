@@ -4,7 +4,7 @@
 # The overall system your service is a part of
 system: bookinfo
 # The name of your service
-service: bookinfo-details
+service: details
 # The major version number for your service
 version: 1
 
