@@ -11,4 +11,4 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "*"
+    - "lvh.me" # resolves to 127.0.0.1

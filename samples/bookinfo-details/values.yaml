@@ -1,0 +1,55 @@
+# Default values for bookinfo-details.
+# This is a YAML-formatted file.
+
+# The overall system your service is a part of
+system: bookinfo
+# The name of your service
+service: bookinfo-details
+# The major version number for your service
+version: 1
+
+# Istio uses the service account name as a component of the service's security
+# identity. Set "create" to false to use an previously created service account.
+serviceAccount:
+  name: bookinfo-details
+  create: true
+
+# The maximum number of pods from that set that can be unavailable at once
+maxUnavailable: 1
+
+# Docker settings
+image:
+  # The name of your docker container
+  repository: docker.io/istio/examples-bookinfo-details-v1
+  # Your docker container's tag
+  tag: 1.16.2
+  imagePullPolicy: IfNotPresent
+
+# The number of pod replicas to run for your service
+replicaCount: 3
+
+# Port settings
+# Ports must be named <protocol>[-<suffix>] to work with Istio.
+# Valid protocols are grpc, http, http2, https, mongo, mysql, redis, tcp, tls, udp
+ports:
+  - name: http
+    port: 9080
+    targetPort: 9080
+
+configMap:
+  # Where the config map should be mounted inside your container's filesystem.
+  mountPath: /config/bookinfo-details-config
+  fileName: config.yaml
+  # Everything under content is copied verbatim into your service's configmap.
+  content:
+    key1: value1
+    key2: value2
+
+# Resource settings (use Kubernetes syntax)
+resources:
+  requests:
+    memory: "32Mi"
+    cpu: "200m"
+  limits:
+    memory: "64Mi"
+    cpu: "250M"
