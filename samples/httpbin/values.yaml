@@ -49,15 +49,6 @@ ingressGateway:
     - "/put"
     - "/status"
 
-configMap:
-  # Where the config map should be mounted inside your container's filesystem.
-  mountPath: /config/httpbin-config
-  fileName: config.yaml
-  # Everything under content is copied verbatim into your service's configmap.
-  content:
-    key1: value1
-    key2: value2
-
 # Resource settings (use Kubernetes syntax)
 resources:
   requests:
