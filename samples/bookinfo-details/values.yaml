@@ -1,17 +1,17 @@
-# Default values for <CHARTNAME>.
+# Default values for bookinfo-details.
 # This is a YAML-formatted file.
 
 # The overall system your service is a part of
-system: <CHARTNAME>
+system: bookinfo
 # The name of your service
-service: <CHARTNAME>
+service: details
 # The major version number for your service
 version: 1
 
 # Istio uses the service account name as a component of the service's security
 # identity. Set "create" to false to use an previously created service account.
 serviceAccount:
-  name: <CHARTNAME>
+  name: bookinfo-details
   create: true
 
 # The number of pod replicas to run for your service
@@ -22,25 +22,22 @@ maxUnavailable: 1
 # Docker settings
 image:
   # The name of your docker container
-  repository: XXXX
+  repository: docker.io/istio/examples-bookinfo-details-v1
   # Your docker container's tag
-  tag: YYYY
+  tag: 1.16.2
   imagePullPolicy: IfNotPresent
 
 # Port settings
 # Ports must be named <protocol>[-<suffix>] to work with Istio.
 # Valid protocols are grpc, http, http2, https, mongo, mysql, redis, tcp, tls, udp
 ports:
-  - name: grpc-svc
-    port: 8443
-    targetPort: 8443
-  - name: http-status
-    port: 8080
-    targetPort: 8080
+  - name: http
+    port: 9080
+    targetPort: 9080
 
 configMap:
   # Where the config map should be mounted inside your container's filesystem.
-  mountPath: /config/<CHARTNAME>-config
+  mountPath: /config/bookinfo-details-config
   fileName: config.yaml
   # Everything under content is copied verbatim into your service's configmap.
   content:
@@ -62,9 +59,9 @@ probes:
     initialDelaySeconds: 30
     httpGet:
       path: /health
-      port: 8080
+      port: 9080
   readinessProbe:
     timeoutSeconds: 10
     httpGet:
-      path: /ready
-      port: 8080
+      path: /health
+      port: 9080

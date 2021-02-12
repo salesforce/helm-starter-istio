@@ -1,5 +1,5 @@
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
+apiVersion: v1
+kind: Service
 metadata:
   name: {{ .Values.service | quote }}
   labels:
@@ -8,8 +8,12 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
   namespace: {{ .Release.Namespace | quote }}
 spec:
-  host: {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local")  | quote }}
-  subsets:
-    - name: {{ (print "v" .Values.version) | quote }}
-      labels:
-        version: {{ .Values.version | quote }}
+  ports:
+{{- range .Values.ports }}
+    - name: {{ .name | quote }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+      protocol: TCP
+{{- end }}
+  selector:
+    app.kubernetes.io/name: {{ .Values.service | quote }}

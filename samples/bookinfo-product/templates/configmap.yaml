@@ -1,5 +1,5 @@
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
+apiVersion: v1
+kind: ConfigMap
 metadata:
   name: {{ .Values.service | quote }}
   labels:
@@ -7,9 +7,6 @@ metadata:
     app.kubernetes.io/part-of: {{ .Values.system | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
   namespace: {{ .Release.Namespace | quote }}
-spec:
-  host: {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local")  | quote }}
-  subsets:
-    - name: {{ (print "v" .Values.version) | quote }}
-      labels:
-        version: {{ .Values.version | quote }}
+data:
+  {{ .Values.configMap.fileName | default "config.yaml" }}: |-
+{{ toYaml .Values.configMap.content | indent 4 }}
