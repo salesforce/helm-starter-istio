@@ -1,5 +1,4 @@
 {{- range $key, $spec := .Values.authorizations }}
-{{- if $spec.enabled }}
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -35,6 +34,5 @@ spec:
         {{- end }}
     {{ end }}
   {{- end }}
-{{- end }}
 ---
 {{- end }}

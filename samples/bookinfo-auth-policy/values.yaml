@@ -4,7 +4,6 @@ namespacePolicy:
 
 authorizations:
   bookinfo-product:
-    enabled: true
     matchLabels:
       app: product
     rules:
@@ -18,7 +17,6 @@ authorizations:
       - /api/v1/products
 
   bookinfo-details:
-    enabled: true
     matchLabels:
       app: details
     rules:
@@ -28,7 +26,6 @@ authorizations:
       - /details/*
 
   bookinfo-reviews:
-    enabled: true
     matchLabels:
       app: reviews
     rules:
