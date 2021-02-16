@@ -1,12 +1,10 @@
 namespacePolicy:
-  default:
-    defaultDeny: true
-    mtlsMode: STRICT
+  defaultDeny: true
+  mtlsMode: STRICT
 
 authorizations:
   bookinfo-product:
     enabled: true
-    namespace: default
     matchLabels:
       app: product
     rules:
@@ -21,7 +19,6 @@ authorizations:
 
   bookinfo-details:
     enabled: true
-    namespace: default
     matchLabels:
       app: details
     rules:
@@ -32,7 +29,6 @@ authorizations:
 
   bookinfo-reviews:
     enabled: true
-    namespace: default
     matchLabels:
       app: reviews
     rules:

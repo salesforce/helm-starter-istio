@@ -1,11 +1,8 @@
-{{- range $key, $spec := .Values.namespacePolicy }}
 apiVersion: "security.istio.io/v1beta1"
 kind: "PeerAuthentication"
 metadata:
-  name: {{ (print $key "-peer-policy") | lower | quote }}
-  namespace: {{ $key | quote }}
+  name: {{ (print .Release.Namespace "-peer-policy") | lower | quote }}
+  namespace: {{ .Release.Namespace | quote }}
 spec:
   mtls:
-    mode: {{ $spec.mtlsMode | quote }}
----
-{{- end }}
+    mode: {{ .Values.namespacePolicy.mtlsMode | quote }}

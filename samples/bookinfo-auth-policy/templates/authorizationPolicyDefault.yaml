@@ -1,10 +1,9 @@
-{{- range $key, $spec := .Values.namespacePolicy }}
-{{- if $spec.defaultDeny }}
+{{- if .Values.namespacePolicy.defaultDeny }}
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: "default-authorization-policy"
-  namespace: {{ $key | quote }}
+  namespace: {{ .Release.Namespace | quote }}
 spec:
   {}
 {{- else }}
@@ -12,11 +11,9 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: "default-authorization-policy"
-  namespace: {{ $key | quote }}
+  namespace: {{ .Release.Namespace | quote }}
 spec:
   action: ALLOW
   rules:
   - {}
-{{- end }}
----
 {{- end }}

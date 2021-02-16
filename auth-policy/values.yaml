@@ -1,12 +1,10 @@
 namespacePolicy:
-  default:
-    defaultDeny: true
-    mtlsMode: STRICT
+  defaultDeny: true
+  mtlsMode: STRICT
 
 authorizations:
   myService:
     enabled: true
-    namespace: default
     matchLabels:
       app: myService
     rules:
