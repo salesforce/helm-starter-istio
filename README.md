@@ -48,10 +48,11 @@ Pick the starter you want to use:
 
 The `samples` directory contains example `values.yaml` files for installing the
 [Istio Bookinfo](https://istio.io/latest/docs/examples/bookinfo/) sample application.
-The samples assume you are running Kubernetes and Istio locally using Docker
-Desktop using the default profile.
 
 ### Set up Istio
+
+The samples assume you are running Kubernetes and Istio locally using Docker
+Desktop using the default profile.
 
 ```sh
 > istioctl install --set profile=default -y
