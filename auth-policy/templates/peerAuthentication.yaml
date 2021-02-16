@@ -1,0 +1,8 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "PeerAuthentication"
+metadata:
+  name: {{ (print .Release.Namespace "-peer-policy") | lower | quote }}
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  mtls:
+    mode: {{ .Values.namespacePolicy.mtlsMode | quote }}

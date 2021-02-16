@@ -1,0 +1,19 @@
+{{- if .Values.namespacePolicy.defaultDeny }}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: "default-authorization-policy"
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  {}
+{{- else }}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: "default-authorization-policy"
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  action: ALLOW
+  rules:
+  - {}
+{{- end }}

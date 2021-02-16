@@ -1,0 +1,14 @@
+namespacePolicy:
+  defaultDeny: true
+  mtlsMode: STRICT
+
+authorizations:
+  myService:
+    enabled: true
+    matchLabels:
+      app: myService
+    rules:
+    - allowPrincipals:
+      - namespace/serviceAccount
+      paths:
+      - /*

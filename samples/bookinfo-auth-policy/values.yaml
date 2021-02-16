@@ -1,0 +1,38 @@
+namespacePolicy:
+  defaultDeny: true
+  mtlsMode: STRICT
+
+authorizations:
+  bookinfo-product:
+    enabled: true
+    matchLabels:
+      app: product
+    rules:
+    - allowPrincipals:
+      - istio-system/istio-ingressgateway-service-account
+      paths:
+      - /productpage
+      - /static
+      - /login
+      - /logout
+      - /api/v1/products
+
+  bookinfo-details:
+    enabled: true
+    matchLabels:
+      app: details
+    rules:
+    - allowPrincipals:
+      - bookinfo-product
+      paths:
+      - /details/*
+
+  bookinfo-reviews:
+    enabled: true
+    matchLabels:
+      app: reviews
+    rules:
+    - allowPrincipals:
+      - bookinfo-product
+      paths:
+      - /reviews/*
