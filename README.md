@@ -51,11 +51,15 @@ The `samples` directory contains example `values.yaml` files for installing the
 The samples assume you are running Kubernetes and Istio locally using Docker
 Desktop using the default profile.
 
+## Set up Istio
+
 ```sh
 > istioctl install --set profile=default -y
 > kubectl label namespace default istio-injection=enabled
 > kubectl apply -f samples/gateway.yaml
 ```
+
+## Bookinfo services
 
 To install the Bookinfo services:
 
@@ -64,6 +68,10 @@ To install the Bookinfo services:
 > helm template --namespace default -f samples/bookinfo-details/values.yaml mesh-service | kubectl apply -f -
 > helm template --namespace default -f samples/bookinfo-reviews/values.yaml mesh-service | kubectl apply -f -
 ```
+
+Then navigate to <http://lvh.me/productpage>.
+
+## Bookinfo mTLS
 
 To enable configure mTLS authorization policies between the services:
 
