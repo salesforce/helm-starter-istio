@@ -1,0 +1,37 @@
+{{- range $key, $spec := .Values.authorizations }}
+{{- if $spec.enabled }}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ $key | lower | quote }}
+  labels:
+    app.kubernetes.io/name: {{ $key | quote }}
+    app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+    helm.sh: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
+  namespace: {{ $spec.namespace | quote }}
+spec:
+  selector:
+    matchLabels:
+{{- toYaml $spec.matchLabels | nindent 6 }}
+  rules:
+  {{- range $rule := $spec.rules }}
+  -
+    from:
+    - source:
+        principals: 
+        {{- range $principal := $rule.allowPrincipals}}
+        {{- $splits := split "/" $principal }}
+        - {{ (print "cluster.local/ns/" $splits._0 "/sa/" $splits._0) | quote }}
+        {{- end }}
+    {{- if $rule.paths }}
+    to:
+    - operation:
+        paths:
+        {{- range $rule.paths }}
+        - {{.}}
+        {{- end }}
+    {{ end }}
+  {{- end }}
+{{- end }}
+---
+{{- end }}
