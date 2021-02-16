@@ -53,6 +53,8 @@ Desktop using the default profile.
 
 ```sh
 > istioctl install --set profile=default -y
+> kubectl label namespace default istio-injection=enabled
+> kubectl apply -f samples/gateway.yaml
 ```
 
 To install the Bookinfo services:
