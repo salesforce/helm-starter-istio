@@ -43,3 +43,28 @@ Pick the starter you want to use:
 # Deploy the helm chart to kubernetes
 > helm template NAME | kubectl -apply -f -
 ```
+
+## Samples
+
+The `samples` directory contains example `values.yaml` files for installing the
+[Istio Bookinfo](https://istio.io/latest/docs/examples/bookinfo/) sample application.
+The samples assume you are running Kubernetes and Istio locally using Docker
+Desktop using the default profile.
+
+```sh
+> istioctl install --set profile=default -y
+```
+
+To install the Bookinfo services:
+
+```sh
+> helm template --namespace default -f samples/bookinfo-product/values.yaml ingress-service | kubectl apply -f -
+> helm template --namespace default -f samples/bookinfo-details/values.yaml mesh-service | kubectl apply -f -
+> helm template --namespace default -f samples/bookinfo-reviews/values.yaml mesh-service | kubectl apply -f -
+```
+
+To enable configure mTLS authorization policies between the services:
+
+```sh
+> helm template --namespace default -f samples/bookinfo-auth-policy/values.yaml auth-policy | kubectl apply -f -
+```
