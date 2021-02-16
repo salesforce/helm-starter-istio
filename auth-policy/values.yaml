@@ -9,7 +9,6 @@ authorizations:
     namespace: default
     matchLabels:
       app: myService
-      version: 1
     rules:
     - allowPrincipals:
       - namespace/serviceAccount

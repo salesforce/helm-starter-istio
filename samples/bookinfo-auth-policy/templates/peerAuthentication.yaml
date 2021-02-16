@@ -1,12 +1,11 @@
 {{- range $key, $spec := .Values.namespacePolicy }}
-{{- if $spec.defaultDeny }}
 apiVersion: "security.istio.io/v1beta1"
-kind: "AuthorizationPolicy"
+kind: "PeerAuthentication"
 metadata:
-  name: "deny-all"
+  name: {{ (print $key "-peer-policy") | lower | quote }}
   namespace: {{ $key | quote }}
 spec:
-  {}
+  mtls:
+    mode: {{ $spec.mtlsMode | quote }}
 ---
-{{- end }}
 {{- end }}
