@@ -11,7 +11,7 @@ authorizations:
       - istio-system/istio-ingressgateway-service-account
       paths:
       - /productpage
-      - /static
+      - /static/*
       - /login
       - /logout
       - /api/v1/products

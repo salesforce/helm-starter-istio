@@ -6,7 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ $key | quote }}
     app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
-    helm.sh: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
   namespace: {{ $.Release.Namespace | quote }}
 spec:
   selector:
