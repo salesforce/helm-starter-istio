@@ -51,7 +51,7 @@ The `samples` directory contains example `values.yaml` files for installing the
 The samples assume you are running Kubernetes and Istio locally using Docker
 Desktop using the default profile.
 
-## Set up Istio
+### Set up Istio
 
 ```sh
 > istioctl install --set profile=default -y
@@ -59,7 +59,7 @@ Desktop using the default profile.
 > kubectl apply -f samples/gateway.yaml
 ```
 
-## Bookinfo services
+### Bookinfo services
 
 To install the Bookinfo services:
 
@@ -71,7 +71,7 @@ To install the Bookinfo services:
 
 Then navigate to <http://lvh.me/productpage>.
 
-## Bookinfo mTLS
+### Bookinfo mTLS
 
 To enable configure mTLS authorization policies between the services:
 
