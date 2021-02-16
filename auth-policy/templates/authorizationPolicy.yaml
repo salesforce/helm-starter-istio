@@ -15,13 +15,16 @@ spec:
 {{- toYaml $spec.matchLabels | nindent 6 }}
   rules:
   {{- range $rule := $spec.rules }}
-  -
-    from:
+  - from:
     - source:
         principals: 
         {{- range $principal := $rule.allowPrincipals}}
+        {{- if contains "/" $principal }}
         {{- $splits := split "/" $principal }}
         - {{ (print "cluster.local/ns/" $splits._0 "/sa/" $splits._1) | quote }}
+        {{- else }}
+        - {{ (print "cluster.local/ns/" $.Release.Namespace "/sa/" $principal) | quote }}
+        {{- end }}
         {{- end }}
     {{- if $rule.paths }}
     to:

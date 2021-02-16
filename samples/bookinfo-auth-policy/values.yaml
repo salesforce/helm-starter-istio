@@ -23,7 +23,7 @@ authorizations:
       app: details
     rules:
     - allowPrincipals:
-      - default/bookinfo-product
+      - bookinfo-product
       paths:
       - /details/*
 
@@ -33,6 +33,6 @@ authorizations:
       app: reviews
     rules:
     - allowPrincipals:
-      - default/bookinfo-product
+      - bookinfo-product
       paths:
       - /reviews/*
