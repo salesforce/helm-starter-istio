@@ -1,0 +1,98 @@
+{{- range $key, $spec := .Values.mediatedTls }}
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: {{ (print $key "-egress") | quote }}
+  labels:
+    app.kubernetes.io/name: {{ (print $key "-egress") | quote }}
+    app.kubernetes.io/part-of: istio-egress
+    app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+  namespace: {{ $.Release.Namespace | quote }}
+spec:
+  hosts:
+  - {{ $spec.externalHost | quote }}
+{{- if $spec.alias }}
+  - {{ $spec.alias | quote }}
+{{- end }}
+  location: MESH_EXTERNAL
+  ports:
+  - name: http-port
+    number: 80
+    protocol: HTTP
+  - name: https-port
+    number: 443
+    protocol: HTTPS
+  resolution: DNS
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{ (print $key "-egress") | quote }}
+  labels:
+    app.kubernetes.io/name: {{ (print $key "-egress") | quote }}
+    app.kubernetes.io/part-of: istio-egress
+    app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+  namespace: {{ $.Release.Namespace | quote }}
+spec:
+  host: {{ $spec.externalHost | quote }}
+  subsets:
+  - name: tls-origination
+    trafficPolicy:
+      portLevelSettings:
+      - port:
+          number: 443
+        tls:
+          mode: {{ $spec.tlsMode }}
+          sni: {{ $spec.externalHost | quote }}
+{{- if $spec.trafficPolicy }}
+  trafficPolicy:
+{{ toYaml $spec.trafficPolicy | indent 4 }}
+{{- end }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ (print $key "-egress") | quote }}
+  labels:
+    app.kubernetes.io/name: {{ (print $key "-egress") | quote }}
+    app.kubernetes.io/part-of: istio-egress
+    app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+  namespace: {{ $.Release.Namespace | quote }}
+spec:
+  hosts:
+  - {{ $spec.externalHost | quote }}
+{{- if $spec.alias }}
+  - {{ $spec.alias | quote }}
+{{- end }}
+  http:
+  - match:
+    - port: 80
+    route:
+    - destination:
+        host: {{ $spec.externalHost | quote }}
+        port:
+          number: 443
+        subset: tls-origination
+{{- if $spec.retries }}
+    retries:
+{{ toYaml $spec.retries | indent 6 }}
+    timeout: {{ required "You must specify an overall timeout to use retries" $spec.timeout}}
+{{- else if $spec.timeout }}
+    timeout: {{ $spec.timeout }}
+{{- end }}
+{{- if $spec.alias }}
+    rewrite:
+      authority: {{ $spec.externalHost | quote }}
+{{- end }}
+  tls:
+  - match:
+    - port: 443
+      sniHosts:
+      - {{ $spec.externalHost | quote }}
+    route:
+    - destination:
+        host: {{ $spec.externalHost | quote }}
+        port:
+          number: 443
+---
+{{- end }}

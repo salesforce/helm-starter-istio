@@ -1,0 +1,21 @@
+{{- range $key, $spec := .Values.passthroughTls }}
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: {{ (print $key "-egress") | quote }}
+  labels:
+    app.kubernetes.io/name: {{ (print $key "-egress") | quote }}
+    app.kubernetes.io/part-of: istio-egress
+    app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+  namespace: {{ $.Release.Namespace | quote }}
+spec:
+  hosts:
+  - {{ $spec.externalHost | quote }}
+  ports:
+  - name: tls
+    number: 443
+    protocol: TLS
+  location: MESH_EXTERNAL
+  resolution: NONE
+---
+{{- end }}

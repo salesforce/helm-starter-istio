@@ -1,0 +1,33 @@
+# Mediated TLS services originate their TLS from the client Istio proxy. This gives
+# Istio the opportunity to add the full range of policy configuration to the request.
+# 
+# You call them using http:// in your code and the Istio proxy upgrades the request to https.
+mediatedTls:
+
+  amazon:
+    externalHost: amazon.com
+    tlsMode: SIMPLE
+
+  wikipedia:
+    externalHost: en.wikipedia.org
+    alias: wikipedia.com
+    tlsMode: SIMPLE
+    timeout: 15s
+    retries:
+      attempts: 3
+      retryOn: 5xx,connect-failure,refused-stream,reset
+      perTryTimeout: 3s
+    trafficPolicy:
+      connectionPool:
+        http:
+          idleTimeout: 30s
+
+# Passthrough TLS services originate their TLS from service code. The Istio proxy
+# does not modify the request.
+# 
+# You call them using https:// in your code and the Istio proxy passes it through
+# untouched.
+passthroughTls:
+
+  google:
+    externalHost: "*.google.com"

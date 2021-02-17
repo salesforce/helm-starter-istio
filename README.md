@@ -55,7 +55,7 @@ The samples assume you are running Kubernetes and Istio locally using Docker
 Desktop using the default profile.
 
 ```sh
-> istioctl install --set profile=default -y
+> istioctl install --set profile=default --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY -y
 > kubectl label namespace default istio-injection=enabled
 > kubectl apply -f samples/gateway.yaml
 ```
@@ -74,8 +74,23 @@ Then navigate to <http://lvh.me/productpage>.
 
 ### Bookinfo mTLS
 
-To enable configure mTLS authorization policies between the services:
+Enable mTLS authorization policies between the services:
 
 ```sh
 > helm template --namespace default -f samples/bookinfo-auth-policy/values.yaml auth-policy | kubectl apply -f -
+```
+
+### Mesh egress
+
+Install mesh egress configuration:
+
+```sh
+> helm template --namespace default -f samples/egress/values.yaml mesh-egress | kubectl apply -f -
+```
+
+Install a `curl` pod in Kubernetes so you have a shell to log into to try curl testing
+different egress routes.
+
+```sh
+> kubectl apply -f https://raw.githubusercontent.com/istio/istio/master/samples/sleep/sleep.yaml
 ```
