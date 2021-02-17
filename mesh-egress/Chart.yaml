@@ -1,5 +1,6 @@
-apiVersion: v1
-appVersion: "1.0"
-description: Egress gateway configuration for CDP
-name: cdp-egress-gateway
-version: 0.0.0 # Set in .strata.yaml
+apiVersion: v2
+description: Egress configuration for Istio
+name: <CHARTNAME>
+type: application
+version: 1.0.0
+icon: https://istio.io/latest/img/istio-whitelogo-bluebackground-framed.svg

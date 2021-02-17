@@ -9,6 +9,11 @@ metadata:
   namespace: {{ .Release.Namespace | quote }}
 spec:
   host: {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local")  | quote }}
+{{- if .Values.outlierDetection }}
+  trafficPolicy:
+    outlierDetection:
+{{ toYaml .Values.outlierDetection | indent 6 }}
+{{- end }}
   subsets:
     - name: {{ (print "v" .Values.version) | quote }}
       labels:
