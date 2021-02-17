@@ -8,6 +8,14 @@ service: <CHARTNAME>
 # The major version number for your service
 version: 1
 
+# Docker settings
+image:
+  # The name of your docker container
+  repository: XXXX
+  # Your docker container's tag
+  tag: YYYY
+  imagePullPolicy: IfNotPresent
+
 # Istio uses the service account name as a component of the service's security
 # identity. Set "create" to false to use an previously created service account.
 serviceAccount:
@@ -24,14 +32,6 @@ autoscaling:
   minReplicas: 2
   maxReplicas: 4
   targetAverageCpuUtilization: 80
-
-# Docker settings
-image:
-  # The name of your docker container
-  repository: XXXX
-  # Your docker container's tag
-  tag: YYYY
-  imagePullPolicy: IfNotPresent
 
 # Port settings
 # Ports must be named <protocol>[-<suffix>] to work with Istio.
@@ -54,14 +54,20 @@ ingressGateway:
     - "/foo"
     - "/bar"
 
-configMap: # Optional
-  # Where the config map should be mounted inside your container's filesystem.
-  mountPath: /config/<CHARTNAME>-config
-  fileName: config.yaml
-  # Everything under content is copied verbatim into your service's configmap.
-  content:
-    key1: value1
-    key2: value2
+# The overall timeout for requests to this service
+# Optional
+overallTimeout: 10s
+
+# Client retry settings (use Istio syntax)
+# Optional
+retries:
+  attempts: 3
+  perTryTimeout: 2s
+
+# Circuit breaker settings (use Istio syntax)
+# Optional
+outlierDetection: 
+  consecutive5xxErrors: 5
 
 # Resource settings (use Kubernetes syntax)
 # Optional
@@ -86,3 +92,12 @@ probes:
     httpGet:
       path: /ready
       port: 8080
+
+configMap: # Optional
+  # Where the config map should be mounted inside your container's filesystem.
+  mountPath: /config/<CHARTNAME>-config
+  fileName: config.yaml
+  # Everything under content is copied verbatim into your service's configmap.
+  content:
+    key1: value1
+    key2: value2

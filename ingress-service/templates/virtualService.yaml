@@ -22,3 +22,10 @@ spec:
       - destination:
           host: {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}
           subset: {{ (print "v" .Values.version) | quote }}
+{{- if .Values.retries }}
+      retries:
+{{ toYaml .Values.retries | indent 8 }}
+      timeout: {{ required "You must specify an overall timeout to use retries" .Values.overallTimeout}}
+{{- else if .Values.overallTimeout }}
+      timeout: {{ .Values.overallTimeout }}
+{{- end }}
