@@ -19,6 +19,12 @@ replicaCount: 3
 # The maximum number of pods from that set that can be unavailable at once
 maxUnavailable: 1
 
+# Horizontal pod autoscaler configuration (optional)
+autoscaling:
+  minReplicas: 1
+  maxReplicas: 5
+  targetAverageCpuUtilization: 80
+
 # Docker settings
 image:
   # The name of your docker container
