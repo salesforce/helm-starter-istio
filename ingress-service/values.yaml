@@ -14,10 +14,16 @@ serviceAccount:
   name: <CHARTNAME>
   create: true
 
-# The number of pod replicas to run for your service
+# The initial number of pod replicas to run for your service
 replicaCount: 3
 # The maximum number of pods from that set that can be unavailable at once
 maxUnavailable: 1
+
+# Horizontal pod autoscaler configuration (optional)
+autoscaling:
+  minReplicas: 2
+  maxReplicas: 4
+  targetAverageCpuUtilization: 80
 
 # Docker settings
 image:
