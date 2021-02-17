@@ -54,7 +54,7 @@ ingressGateway:
     - "/foo"
     - "/bar"
 
-configMap:
+configMap: # Optional
   # Where the config map should be mounted inside your container's filesystem.
   mountPath: /config/<CHARTNAME>-config
   fileName: config.yaml
@@ -64,6 +64,7 @@ configMap:
     key2: value2
 
 # Resource settings (use Kubernetes syntax)
+# Optional
 resources:
   requests:
     memory: "32Mi"
@@ -73,6 +74,7 @@ resources:
     cpu: "250M"
 
 # Probe settings (use Kubernetes syntax)
+# Optional
 probes:
   livenessProbe:
     initialDelaySeconds: 30
