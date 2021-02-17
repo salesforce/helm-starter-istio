@@ -1,14 +1,14 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: {{ .Values.service | quote }}
+  name: {{ .Values.service | lower | quote }}
   labels:
-    app.kubernetes.io/name: {{ .Values.service | quote }}
+    app.kubernetes.io/name: {{ .Values.service | lower | quote }}
     app.kubernetes.io/part-of: {{ .Values.system | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
 spec:
   maxUnavailable: {{ .Values.maxUnavailable }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ .Values.service | quote }}
-      app.kubernetes.io/version: {{ .Values.version | quote }}
+      app: {{ .Values.service | lower | quote }}
+      version: {{ .Values.version | quote }}
