@@ -1,9 +1,9 @@
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
-  name: {{ .Values.service | quote }}
+  name: {{ .Values.service | lower | quote }}
   labels:
-    app.kubernetes.io/name: {{ .Values.service | quote }}
+    app.kubernetes.io/name: {{ .Values.service | lower | quote }}
     app.kubernetes.io/part-of: {{ .Values.system | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
   namespace: {{ .Release.Namespace | quote }}

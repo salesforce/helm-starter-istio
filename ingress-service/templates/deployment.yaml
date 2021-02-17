@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.service | quote }}
+  name: {{ .Values.service | lower | quote }}
   labels:
-    app.kubernetes.io/name: {{ .Values.service | quote }}
+    app.kubernetes.io/name: {{ .Values.service | lower | quote }}
     app.kubernetes.io/part-of: {{ .Values.system | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
   namespace: {{ .Release.Namespace | quote }}
@@ -11,26 +11,26 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ .Values.service | quote }}
-      app.kubernetes.io/version: {{ .Values.version | quote }}
+      app: {{ .Values.service | lower | quote }}
+      version: {{ .Values.version | quote }}
   template:
     metadata:
       labels:
         # Kubernetes recommended labels
-        app.kubernetes.io/name: {{ .Values.service | quote }}
+        app.kubernetes.io/name: {{ .Values.service | lower | quote }}
         app.kubernetes.io/part-of: {{ .Values.system | quote }}
         app.kubernetes.io/version: {{ .Values.version | quote }}
         # Isio required labels
-        app: {{ .Values.service | quote }}
+        app: {{ .Values.service | lower | quote }}
         version: {{ .Values.version | quote }}
 {{- if .Values.configMap }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 {{- end }}
     spec:
-      serviceAccountName: {{ .Values.serviceAccount.name | quote }}
+      serviceAccountName: {{ .Values.serviceAccount.name | lower | quote }}
       containers:
-        - name: {{ .Values.service | quote }}
+        - name: {{ .Values.service | lower | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.imagePullPolicy | quote }}
           ports:
@@ -53,5 +53,5 @@ spec:
       volumes:
         - name: {{ (print .Values.service "-config") | quote }}
           configMap:
-            name: {{ .Values.service | quote }}
+            name: {{ .Values.service | lower | quote }}
 {{- end }}
