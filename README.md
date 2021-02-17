@@ -14,15 +14,16 @@ running in Istio correctly the first time.
 * Creates the following Kubernetes and Istio objects
   * Service
   * Deployment
-  * ConfigMap
+  * ConfigMap (optional)
   * VirtualService
   * DestinationRule
   * PodDisruptionBudget
-  * ServiceAccount
+  * HorizontalPodAutoscaler (optional)
+  * ServiceAccount (optional)
   
 ## Installation
 
-* Clone into `~/.helm/starters` or,
+* Clone into `$helm-home/starters` or,
 * Install with the [`helm-starter`](https://github.com/salesforce/helm-starter) plugin.
   * `helm plugin install https://github.com/salesforce/helm-starter.git`
   * `helm starter fetch https://github.com/salesforce/helm-starter-istio.git`
