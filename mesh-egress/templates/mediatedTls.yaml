@@ -11,9 +11,6 @@ metadata:
 spec:
   hosts:
   - {{ $spec.externalHost | quote }}
-{{- if $spec.alias }}
-  - {{ $spec.alias | quote }}
-{{- end }}
   location: MESH_EXTERNAL
   ports:
   - name: http-port
@@ -61,9 +58,6 @@ metadata:
 spec:
   hosts:
   - {{ $spec.externalHost | quote }}
-{{- if $spec.alias }}
-  - {{ $spec.alias | quote }}
-{{- end }}
   http:
   - match:
     - port: 80
@@ -79,10 +73,6 @@ spec:
     timeout: {{ required "You must specify an overall timeout to use retries" $spec.timeout}}
 {{- else if $spec.timeout }}
     timeout: {{ $spec.timeout }}
-{{- end }}
-{{- if $spec.alias }}
-    rewrite:
-      authority: {{ $spec.externalHost | quote }}
 {{- end }}
   tls:
   - match:
