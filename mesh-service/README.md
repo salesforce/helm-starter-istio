@@ -1,11 +1,12 @@
-# <CHARTNAME> Helm Chart
+# Mesh Service Helm Chart
 
-This Helm chart installs the <CHARTNAME> service in both Kubernetes and Istio.
+This Helm chart installs a service in both Kubernetes and Istio, and makes it
+available to other services in the service mesh.
 
 ## Installation
 
 ```sh
-> helm template --namespace=[namespace] <CHARTNAME> | kubectl apply -f -
+> helm template --namespace=[namespace] [chartname] | kubectl apply -f -
 ```
 
 ## Values.yaml

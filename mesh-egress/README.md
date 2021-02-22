@@ -1,6 +1,6 @@
-# <CHARTNAME> Istio Egress Policy
+# Istio Egress Policy
 
-This Helm chart installs <CHARTNAME> Istio egress policy into an Istio
+This Helm chart installs Istio egress policy into an Istio
 service mesh. Egress policy is most commonly needed when
 `meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY` is set.
 
@@ -10,7 +10,7 @@ The installation namespace is important when installing this helm chart. It's
 value sets the Kubernetes namespace for all settings in this chart.
 
 ```sh
-> helm template --namespace=[namespace] <CHARTNAME> | kubectl apply -f -
+> helm template --namespace=[namespace] [chartname] | kubectl apply -f -
 ```
 
 ## Mediated vs Passthrough TLS

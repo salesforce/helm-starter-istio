@@ -1,7 +1,7 @@
-# <CHARTNAME> Istio Authorization Policy
+# Istio Authorization Policy
 
-This Helm chart installs <CHARTNAME> Istio authorization policy into an Istio
-service mesh.
+This Helm chart installs Istio authorization policy into an Istio service mesh
+namespace.
 
 ## Installation
 
@@ -9,7 +9,7 @@ The installation namespace is important when installing this helm chart. It's
 value sets the Kubernetes namespace for all settings in this chart.
 
 ```sh
-> helm template --namespace=[namespace] <CHARTNAME> | kubectl apply -f -
+> helm template --namespace=[namespace] [chartname] | kubectl apply -f -
 ```
 
 ## Values.yaml
