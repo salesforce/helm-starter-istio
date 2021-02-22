@@ -6,7 +6,6 @@ mediatedTls:
 
   wikipedia:
     externalHost: en.wikipedia.org
-    alias: wikipedia.org
     tlsMode: SIMPLE
     timeout: 15s
     retries:
